@@ -1,285 +1,53 @@
 import style from './Portal.module.css';
 import { ResponsiveLine } from '@nivo/line';
+import { useGetCpiQuery } from './portalApi';
 
 export default function Portal() {
+  const { data } = useGetCpiQuery();
 
-  const newData = [
-    {
-      "id": "japan",
-      "color": "hsl(54, 70%, 50%)",
-      "data": [
-        {
-          "x": "plane",
-          "y": 188
-        },
-        {
-          "x": "helicopter",
-          "y": 213
-        },
-        {
-          "x": "boat",
-          "y": 37
-        },
-        {
-          "x": "train",
-          "y": 297
-        },
-        {
-          "x": "subway",
-          "y": 113
-        },
-        {
-          "x": "bus",
-          "y": 56
-        },
-        {
-          "x": "car",
-          "y": 135
-        },
-        {
-          "x": "moto",
-          "y": 251
-        },
-        {
-          "x": "bicycle",
-          "y": 45
-        },
-        {
-          "x": "horse",
-          "y": 218
-        },
-        {
-          "x": "skateboard",
-          "y": 200
-        },
-        {
-          "x": "others",
-          "y": 190
-        }
-      ]
-    },
-    {
-      "id": "france",
-      "color": "hsl(138, 70%, 50%)",
-      "data": [
-        {
-          "x": "plane",
-          "y": 45
-        },
-        {
-          "x": "helicopter",
-          "y": 17
-        },
-        {
-          "x": "boat",
-          "y": 33
-        },
-        {
-          "x": "train",
-          "y": 44
-        },
-        {
-          "x": "subway",
-          "y": 75
-        },
-        {
-          "x": "bus",
-          "y": 13
-        },
-        {
-          "x": "car",
-          "y": 222
-        },
-        {
-          "x": "moto",
-          "y": 65
-        },
-        {
-          "x": "bicycle",
-          "y": 253
-        },
-        {
-          "x": "horse",
-          "y": 182
-        },
-        {
-          "x": "skateboard",
-          "y": 140
-        },
-        {
-          "x": "others",
-          "y": 253
-        }
-      ]
-    },
-    {
-      "id": "us",
-      "color": "hsl(74, 70%, 50%)",
-      "data": [
-        {
-          "x": "plane",
-          "y": 132
-        },
-        {
-          "x": "helicopter",
-          "y": 210
-        },
-        {
-          "x": "boat",
-          "y": 56
-        },
-        {
-          "x": "train",
-          "y": 204
-        },
-        {
-          "x": "subway",
-          "y": 76
-        },
-        {
-          "x": "bus",
-          "y": 268
-        },
-        {
-          "x": "car",
-          "y": 180
-        },
-        {
-          "x": "moto",
-          "y": 213
-        },
-        {
-          "x": "bicycle",
-          "y": 221
-        },
-        {
-          "x": "horse",
-          "y": 81
-        },
-        {
-          "x": "skateboard",
-          "y": 63
-        },
-        {
-          "x": "others",
-          "y": 253
-        }
-      ]
-    },
-    {
-      "id": "germany",
-      "color": "hsl(12, 70%, 50%)",
-      "data": [
-        {
-          "x": "plane",
-          "y": 159
-        },
-        {
-          "x": "helicopter",
-          "y": 196
-        },
-        {
-          "x": "boat",
-          "y": 111
-        },
-        {
-          "x": "train",
-          "y": 26
-        },
-        {
-          "x": "subway",
-          "y": 94
-        },
-        {
-          "x": "bus",
-          "y": 250
-        },
-        {
-          "x": "car",
-          "y": 237
-        },
-        {
-          "x": "moto",
-          "y": 52
-        },
-        {
-          "x": "bicycle",
-          "y": 205
-        },
-        {
-          "x": "horse",
-          "y": 246
-        },
-        {
-          "x": "skateboard",
-          "y": 74
-        },
-        {
-          "x": "others",
-          "y": 297
-        }
-      ]
-    },
-    {
-      "id": "norway",
-      "color": "hsl(263, 70%, 50%)",
-      "data": [
-        {
-          "x": "plane",
-          "y": 188
-        },
-        {
-          "x": "helicopter",
-          "y": 207
-        },
-        {
-          "x": "boat",
-          "y": 297
-        },
-        {
-          "x": "train",
-          "y": 15
-        },
-        {
-          "x": "subway",
-          "y": 239
-        },
-        {
-          "x": "bus",
-          "y": 59
-        },
-        {
-          "x": "car",
-          "y": 60
-        },
-        {
-          "x": "moto",
-          "y": 101
-        },
-        {
-          "x": "bicycle",
-          "y": 174
-        },
-        {
-          "x": "horse",
-          "y": 116
-        },
-        {
-          "x": "skateboard",
-          "y": 35
-        },
-        {
-          "x": "others",
-          "y": 241
-        }
-      ]
-    }
-  ];
+  console.log(data?.Results.series[0].data);
+  const rawCpi = data?.Results.series[0].data || [];
+
+  const cpiData = data?.Results.series[0].data.map(cpi => ({
+    x: `${cpi.periodName} ${cpi.year}`,
+    y: cpi.value,
+  })).reverse();
+
+  const inflationRates = rawCpi
+    .slice(0, rawCpi.length - 12)
+    .map((cpi, index) => {
+      const lastYearCpi = Number(rawCpi[index + 12].value);
+      const rate = (Number(cpi.value) * 100 - lastYearCpi * 100) / lastYearCpi;
+      return {
+        x: `${cpi.periodName.slice(0, 3).toUpperCase()} ${cpi.year}`,
+        y: rate,
+      };
+    })
+    .reverse();
+
+  console.log(inflationRates);
+
+  const interestRate = [{
+    id: "Interest Rate",
+    color: "hsl(263, 70%, 50%)",
+    data: inflationRates || [],
+  }];
+
+  const metaData = [{
+    id: "CPI",
+    color: "hsl(12, 70%, 50%)",
+    data: cpiData || [],
+  }];
+  // hsl(54, 70%, 50%)
+  // hsl(138, 70%, 50%)
+  // hsl(74, 70%, 50%)
+  // hsl(12, 70%, 50%)
+  // hsl(263, 70%, 50%)
 
   return (
     <div className={style.graphContainer}>
       <ResponsiveLine
-        data={newData}
+        data={interestRate}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
         xScale={{ type: 'point' }}
         yScale={{
@@ -296,7 +64,7 @@ export default function Portal() {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: 'transportation',
+          legend: 'Month Year',
           legendOffset: 36,
           legendPosition: 'middle'
         }}
@@ -304,7 +72,7 @@ export default function Portal() {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: 'count',
+          legend: 'Percentage',
           legendOffset: -40,
           legendPosition: 'middle'
         }}
