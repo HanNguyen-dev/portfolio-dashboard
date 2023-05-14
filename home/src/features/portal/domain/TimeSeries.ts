@@ -1,4 +1,4 @@
-export type ConsumerPriceIndex = {
+export type TimeSeries = {
   status: string,
   responseTime: number,
   message: [],
