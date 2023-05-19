@@ -2,12 +2,12 @@ import React from 'react';
 
 import style from './App.module.css';
 import AppRouter from './AppRouter';
-import TopBar from './features/portal/components/TopBar';
+import NavBar from './features/navbar/NavBar';
 
 function App() {
   return (
     <>
-      <TopBar />
+      <NavBar />
       <div className={style.appWrapper}>
         <AppRouter />
       </div>

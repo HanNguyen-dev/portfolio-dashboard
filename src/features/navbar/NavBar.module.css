@@ -1,0 +1,5 @@
+.verticalDivider {
+  margin: 0 1rem 0 1.5rem;
+  border: 1px grey solid;
+  height: 1.8rem;
+}
