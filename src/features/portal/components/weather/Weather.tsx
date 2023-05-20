@@ -35,7 +35,7 @@ export default function Weather() {
             xs={6}
           >
             <div className={styles.iconContainer}>
-              <img src="https://openweathermap.org/img/wn/10d@2x.png" />
+              <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon"/>
               <Typography sx={{ mb: 1.5, textAlign: 'center' }} color="text.secondary">
                 Cloudy
               </Typography>
