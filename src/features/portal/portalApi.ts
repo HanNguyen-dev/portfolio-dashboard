@@ -15,8 +15,11 @@ export const portalApi = createApi({
     getPlaceDetails: builder.query<PlaceDetails, { placeId: string, session?: string }>({
       query: (payload) => `/places/${payload.placeId}/${payload.session}`,
     }),
-    getForecasts: builder.query<Forecasts, { lat: number, lon: number }>({
-      query: (payload) => `/weather?lat=${payload.lat}&lon=${payload.lon}`,
+    getForecasts: builder.query<Forecasts, { lat: number | null, lon: number | null }>({
+      query: (payload) => `/weather${payload.lat && payload.lon ? "?lat=" + payload.lat + "&lon=" + payload.lon : ""}`,
+    }),
+    getForecastsByPlace: builder.query<Forecasts, { placeId: string, session?: string }>({
+      query: (payload) => `/weather/${payload.placeId}/${payload.session}`,
     }),
     getCpi: builder.query<TimeSeries, void>({
       query: () => `/timeseries/data/CUUR0000SA0`
@@ -33,4 +36,5 @@ export const {
   useGetPlacesQuery,
   useGetPlaceDetailsQuery,
   useGetForecastsQuery,
+  useGetForecastsByPlaceQuery,
 } = portalApi;

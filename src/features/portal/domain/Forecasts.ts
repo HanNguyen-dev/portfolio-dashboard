@@ -1,5 +1,8 @@
 export type Forecasts = {
-  location: string,
+  location: {
+    name: string,
+    url: string,
+  },
   current_observation: {
     wind: {
       chill?: number,

@@ -24,6 +24,5 @@ export const { updateLocation } = portalSlice.actions;
 
 export const selectLocation = (state: RootState) => state.portal.location;
 
-
 // Exporting reducer
 export default portalSlice.reducer;
