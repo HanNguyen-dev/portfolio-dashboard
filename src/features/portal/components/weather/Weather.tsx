@@ -1,49 +1,57 @@
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useMemo } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import styles from "./Weather.module.css";
 import Autocomplete from "@mui/material/Autocomplete";
-import { debounce } from '@mui/material/utils';
-import { useGetForecastsByPlaceQuery, useGetPlacesQuery } from "../../portalApi";
-import Link from "@mui/material/Link";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { selectLocation, updateLocation } from "../../portalSlice";
 import LocationOnIcon from "@mui/icons-material/LocationOn"
+import { debounce } from '@mui/material/utils';
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { selectForecasts, selectLocation, selectPlaces } from "../../state/portalSelector";
+import { updateLocation } from "../../portalSlice";
+
+import { PortalActionTypes } from "../../state/portalActionTypes";
 
 
 export default function Weather() {
-  const [query, setQuery] = useState<string>('');
-  const session = useRef<string>('');
-
   const location = useAppSelector(selectLocation);
+  const predictions = useAppSelector(selectPlaces);
+  const forecasts = useAppSelector(selectForecasts);
   const dispatch = useAppDispatch();
-  const { data: prediction } = useGetPlacesQuery(
-    { session: session.current, query },
-    { skip: !query || query === location?.description });
-
-  const { data: forecasts } = useGetForecastsByPlaceQuery(
-    { placeId: location?.placeId || '', session: session.current },
-    { skip: !location || !session.current });
-
-  useMemo(() =>  {
-    session.current = prediction?.session || '';
-  }, [prediction?.session]);
 
   const handleQuery = useMemo(
     () => debounce(
-      (event: any, inputValue: string) => setQuery(inputValue),
+      (event: any, inputValue: string, reason: string) => {
+        if (inputValue && reason == 'input') {
+          dispatch({
+            type: PortalActionTypes.FETCH_PLACES_SAGA,
+            payload: { query: inputValue, session: predictions?.session || '' }
+          });
+        }
+      },
       400,
-    ), []);
+    ), [predictions?.session]);
 
   const onSelect = (event: any, inputValue: any) => {
-    const index = prediction?.places.findIndex(x => x.description == inputValue);
-    prediction && index !== undefined && index > -1 && dispatch(updateLocation(prediction.places[index]));
+    const index = predictions?.places.findIndex(x => x.description == inputValue);
+    if (
+      index !== undefined &&
+      index > -1 &&
+      predictions
+    ) {
+      dispatch(updateLocation(predictions.places[index]));
+      dispatch({
+        type: PortalActionTypes.FETCH_FORECASTS_SAGA,
+        payload: { placeId: predictions.places[index].placeId, session: predictions.session },
+      });
+    }
+
   }
 
   return (
@@ -55,7 +63,7 @@ export default function Weather() {
           freeSolo
           filterOptions={x => x}
           value={location?.description || ''}
-          options={prediction?.places.map((option) => option.description) || []}
+          options={predictions?.places?.map((option) => option.description) || []}
           onChange={onSelect}
           onInputChange={handleQuery}
           renderInput={(params) => <TextField {...params} variant="standard" label="Enter a location" />}

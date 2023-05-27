@@ -1,7 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import createSagaMiddleware from "redux-saga";
+import saga from '../features/portal/state/portalSaga';
 import counterReducer from '../features/counter/counterSlice';
 import portalReducer from '../features/portal/portalSlice';
 import { portalApi } from '../features/portal/portalApi';
+
+const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
@@ -11,8 +15,11 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(portalApi.middleware),
+      .concat(portalApi.middleware)
+      .concat(sagaMiddleware),
 });
+
+sagaMiddleware.run(saga);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
