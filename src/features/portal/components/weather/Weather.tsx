@@ -73,7 +73,7 @@ export default function Weather() {
             location && forecasts &&
               <Link
                 color="inherit"
-                href={forecasts.location.url}
+                href={forecasts?.location?.url}
                 rel="noopener"
                 target="_blank">
                   <LocationOnIcon sx={{ color: 'text.secondary' }} />
@@ -86,7 +86,7 @@ export default function Weather() {
             xs={6}
           >
             <Typography sx={{ mt: 2, mb: 1.5, fontSize: 60, textAlign: 'center' }}>
-              {forecasts?.current_observation.condition.temperature || "--"}°C
+              {forecasts?.current_observation?.condition.temperature || "--"}°C
             </Typography>
             <Typography sx={{ mb: 1.5, textAlign: 'center' }} color="text.secondary">
               H: 80°C  L: 60°C
@@ -96,9 +96,9 @@ export default function Weather() {
             xs={6}
           >
             <div className={styles.iconContainer}>
-              <img src={forecasts?.current_observation.condition.iconUrl.replace("4x", "2x")} alt="weather icon"/>
+              <img src={forecasts?.current_observation?.condition.iconUrl.replace("4x", "2x")} alt="weather icon"/>
               <Typography sx={{ mb: 1.5, textAlign: 'center' }} color="text.secondary">
-                {forecasts?.current_observation.condition.text || '____'}
+                {forecasts?.current_observation?.condition.text || '____'}
               </Typography>
             </div>
           </Grid>

@@ -7,9 +7,12 @@ export interface PortalState {
   location?: Place;
   places?: Places;
   forecast?: Forecasts;
+  error: boolean;
 }
 
-const initialState: PortalState = { };
+const initialState: PortalState = {
+  error: false,
+};
 
 export const portalSlice = createSlice({
   name: 'portal',
@@ -26,6 +29,9 @@ export const portalSlice = createSlice({
       if (state.places)
         state.places.session = "";
     },
+    updateError: (state, action: PayloadAction<boolean>) => {
+      state.error = action.payload;
+    }
   },
 });
 
@@ -33,6 +39,7 @@ export const {
   updateLocation,
   updatePlaces,
   updateForecasts,
+  updateError,
 } = portalSlice.actions;
 
 // Exporting reducer

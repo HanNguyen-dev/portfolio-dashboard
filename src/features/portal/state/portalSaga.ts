@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { updateForecasts, updatePlaces } from "../portalSlice";
+import { updateError, updateForecasts, updatePlaces } from "../portalSlice";
 import { fetchForecastsByPlace, fetchPlaces } from "./api/weatherApi";
 import { Places } from "../domain/Places";
 import { PortalActionTypes } from "./portalActionTypes";
@@ -15,7 +15,7 @@ function* fetchPlacesQuery(
     });
     yield put(updatePlaces(result as Places));
   } catch (e) {
-
+    yield put(updateError(true));
   }
 }
 
@@ -28,7 +28,7 @@ function* fetchForecastByPlaceQuery(
     });
     yield put(updateForecasts(result as Forecasts));
   } catch (e) {
-
+    yield put(updateError(true));
   }
 }
 
