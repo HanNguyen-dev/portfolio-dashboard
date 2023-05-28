@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -24,6 +24,14 @@ export default function Weather() {
   const predictions = useAppSelector(selectPlaces);
   const forecasts = useAppSelector(selectForecasts);
   const dispatch = useAppDispatch();
+  const [isCelsius, setIsCelsius] = useState<boolean>(false);
+
+  useEffect(() => {
+    dispatch({
+      type: PortalActionTypes.FETCH_FORECASTS_SAGA,
+      payload: { placeId: '' },
+    });
+  }, []);
 
   const handleQuery = useMemo(
     () => debounce(
@@ -51,7 +59,14 @@ export default function Weather() {
         payload: { placeId: predictions.places[index].placeId, session: predictions.session },
       });
     }
+  }
 
+  const formatTemp = (fahrenheit: number | undefined) => {
+    const unit = isCelsius ? '°C' : '°F';
+    if (fahrenheit === undefined || fahrenheit === null) {
+      return '--' + unit;
+    }
+    return Math.floor(isCelsius ? (fahrenheit - 32) * (5/9) : fahrenheit) + unit;
   }
 
   return (
@@ -70,7 +85,7 @@ export default function Weather() {
         />
         <Typography variant="h5" component="div" sx={{ mt: 2 }}>
           {
-            location && forecasts &&
+            location && forecasts ?
               <Link
                 color="inherit"
                 href={forecasts?.location?.url}
@@ -78,7 +93,12 @@ export default function Weather() {
                 target="_blank">
                   <LocationOnIcon sx={{ color: 'text.secondary' }} />
                   {location.description}
-              </Link>
+              </Link> :
+            forecasts?.location.name &&
+              <div
+                color="inherit">
+                  {forecasts.location.name}
+              </div>
           }
         </Typography>
         <Grid container spacing={0}>
@@ -86,10 +106,10 @@ export default function Weather() {
             xs={6}
           >
             <Typography sx={{ mt: 2, mb: 1.5, fontSize: 60, textAlign: 'center' }}>
-              {forecasts?.current_observation?.condition.temperature || "--"}°C
+              {formatTemp(forecasts?.current_observation?.condition.temperature)}
             </Typography>
             <Typography sx={{ mb: 1.5, textAlign: 'center' }} color="text.secondary">
-              H: 80°C  L: 60°C
+              H: {formatTemp(forecasts?.forecasts[0].high)} L: {formatTemp(forecasts?.forecasts[0].low)}
             </Typography>
           </Grid>
           <Grid item
@@ -105,7 +125,12 @@ export default function Weather() {
         </Grid>
       </CardContent>
       <CardActions>
-        <Button size="small">Convert to Celsius</Button>
+        <Button
+          size="small"
+          onClick={() => setIsCelsius(value => !value)}
+          >
+            Convert to {isCelsius ? 'Fahrenheit' : 'Celsius'}
+          </Button>
       </CardActions>
       </Card>
     </Box>
