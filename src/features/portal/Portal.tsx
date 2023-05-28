@@ -1,21 +1,49 @@
 import Grid from '@mui/material/Grid'
-import styles from './Portal.module.css';
 import Weather from './components/weather/Weather';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectError } from './state/portalSelector';
+import { updateError } from './portalSlice';
 
 export default function Portal() {
+  const error = useAppSelector(selectError);
+  const dispatch = useAppDispatch();
+
   return (
-    <Grid container spacing={3} className={styles.portalGrid}>
-      <Grid item
-        md={6}
-        xs={12}
+    <>
+      <Grid container spacing={3}
+        sx={{
+          maxWidth: '83.125rem',
+          mt: '2rem',
+          mb: '2rem',
+          pl: '2rem',
+          pr: '2rem'
+        }}
       >
-        <Weather />
+        <Grid item
+          md={6}
+          xs={12}
+        >
+          <Weather />
+        </Grid>
+        <Grid item
+          md={6}
+          xs={12}
+        >
+        </Grid>
       </Grid>
-      <Grid item
-        md={6}
-        xs={12}
+      <Snackbar
+        open={error}
+        onClose={(event, reason) => {
+          dispatch(updateError(false));
+        }}
+        autoHideDuration={4000}
       >
-      </Grid>
-    </Grid>
+        <Alert severity="error">
+          We're sorry, an unexpected error occurred.  Please try again later.
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
