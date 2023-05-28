@@ -31,4 +31,8 @@ jobs:
 workflows:
   portfolio-workflow:
     jobs:
-      - build-app
+      - build-app:
+          filters:
+            branches:
+              only:
+                - main
