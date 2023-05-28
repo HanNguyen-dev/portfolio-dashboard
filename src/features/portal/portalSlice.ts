@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Place, Places } from "./domain/Places";
-import { RootState } from "../../app/store";
 import { Forecasts } from "./domain/Forecasts";
 
 export interface PortalState {

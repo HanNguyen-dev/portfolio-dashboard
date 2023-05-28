@@ -31,12 +31,12 @@ export default function Weather() {
       type: PortalActionTypes.FETCH_FORECASTS_SAGA,
       payload: { placeId: '' },
     });
-  }, []);
+  }, [dispatch]);
 
   const handleQuery = useMemo(
     () => debounce(
       (event: any, inputValue: string, reason: string) => {
-        if (inputValue && reason == 'input') {
+        if (inputValue && reason === 'input') {
           dispatch({
             type: PortalActionTypes.FETCH_PLACES_SAGA,
             payload: { query: inputValue, session: predictions?.session || '' }
@@ -44,10 +44,10 @@ export default function Weather() {
         }
       },
       400,
-    ), [predictions?.session]);
+    ), [predictions?.session, dispatch]);
 
   const onSelect = (event: any, inputValue: any) => {
-    const index = predictions?.places.findIndex(x => x.description == inputValue);
+    const index = predictions?.places.findIndex(x => x.description === inputValue);
     if (
       index !== undefined &&
       index > -1 &&
