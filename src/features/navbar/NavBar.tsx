@@ -7,13 +7,20 @@ import IconButton from '@mui/material/IconButton';
 import style from './NavBar.module.css';
 import { router } from '../../AppRouter';
 
+const buttonSxStyle = {
+  fontWeight: 500,
+  ":hover": {
+    textDecorationLine: "underline",
+    textUnderlineOffset: "3px",
+  },
+}
 
 function NavBar() {
   const navigateTo = router.navigate;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="transparent">
+      <AppBar position="static">
         <Toolbar>
           <IconButton
             size="large"
@@ -24,18 +31,20 @@ function NavBar() {
           >
           </IconButton>
           <Typography variant="h6" component="div" sx={{ fontFamily: 'monospace' }}>
-            Han's Dashboard
+            Han's Portfolio
           </Typography>
           <div className={style.verticalDivider}></div>
           <Button
-            sx={({ fontWeight: 700 })}
+            sx={buttonSxStyle}
             onClick={() => navigateTo('/')}
+            color="inherit"
           >
             Dashboard
           </Button>
           <Button
-            sx={({ fontWeight: 700 })}
+            sx={buttonSxStyle}
             onClick={() => navigateTo('/blueprint')}
+            color="inherit"
           >
             Blueprint
           </Button>
