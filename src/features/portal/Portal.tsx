@@ -5,6 +5,7 @@ import Alert from '@mui/material/Alert';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectError } from './state/portalSelector';
 import { updateError } from './portalSlice';
+import Introduction from './components/introduction';
 
 export default function Portal() {
   const error = useAppSelector(selectError);
@@ -21,6 +22,11 @@ export default function Portal() {
           pr: '2rem'
         }}
       >
+        <Grid item
+          xs={12}
+        >
+          <Introduction />
+        </Grid>
         <Grid item
           md={6}
           xs={12}
