@@ -6,6 +6,9 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import style from './NavBar.module.css';
 import { router } from '../../AppRouter';
+import githubLogo from '../../assets/github-mark-white.svg'
+import linkedInLogo from '../../assets/In-White.png'
+import Link from '@mui/material/Link';
 
 const buttonSxStyle = {
   fontWeight: 500,
@@ -48,6 +51,26 @@ function NavBar() {
           >
             Blueprint
           </Button>
+          <div className={style.space}>
+          </div>
+          <Link
+            rel="noopener"
+            href={process.env.REACT_APP_LINKEDIN_LINK}
+            sx={{
+              ml: '1rem',
+            }}
+          >
+            <img className={style.logoButton} src={linkedInLogo}></img>
+          </Link>
+          <Link
+            rel="noopener"
+            href='https://github.com/HanNguyen-dev'
+            sx={{
+              ml: '1rem',
+            }}
+          >
+            <img className={style.logoButton} src={githubLogo}></img>
+          </Link>
         </Toolbar>
       </AppBar>
     </Box>

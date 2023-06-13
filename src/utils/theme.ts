@@ -15,8 +15,8 @@ export const themeApp = createTheme({
 });
 
 export const typographText = {
-  fontSize: "1.4rem",
+  fontSize: "1.18rem",
   lineHeight: "1.8",
-  fontFamily: "Garamond, Georgia, Times New Roman",
+  fontFamily: "Noto Serif, Georgia, Times New Roman, Roboto",
   pb: "1rem",
 }
