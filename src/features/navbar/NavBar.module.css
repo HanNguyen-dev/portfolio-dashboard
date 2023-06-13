@@ -3,3 +3,11 @@
   border: 1px grey solid;
   height: 1.8rem;
 }
+
+.space {
+  flex-grow: 1;
+}
+
+.logoButton {
+  height: 30px;
+}
