@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectError } from './state/portalSelector';
 import { updateError } from './portalSlice';
 import Introduction from './components/introduction';
+import Labor from './components/labor/Labor';
 
 export default function Portal() {
   const error = useAppSelector(selectError);
@@ -32,6 +33,12 @@ export default function Portal() {
           xs={12}
         >
           <Weather />
+        </Grid>
+        <Grid item
+          md={6}
+          xs={12}
+        >
+          <Labor />
         </Grid>
         <Grid item
           md={6}

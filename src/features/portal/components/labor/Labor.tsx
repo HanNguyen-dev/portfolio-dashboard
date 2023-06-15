@@ -1,9 +1,14 @@
 import { ResponsiveLine } from '@nivo/line';
 import { useGetCpiQuery, useGetUnemploymentRateQuery } from '../../portalApi';
 import style from './Labor.module.css';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Labor() {
-  const { data: cpiTimeSeries } = useGetCpiQuery();
+  const { data: cpiTimeSeries, isLoading } = useGetCpiQuery();
   const { data: unemploymentTimeSeries } = useGetUnemploymentRateQuery();
 
   type Point = { x: string, y: number }
@@ -39,13 +44,13 @@ export default function Labor() {
 
 
   const laborRates = [
+    // {
+    //   id: "Unemployment Rate",
+    //   color: "hsl(138, 70%, 50%)",
+    //   data: unemploymentRates,
+    // },
     {
-      id: "Unemployment Rate",
-      color: "hsl(138, 70%, 50%)",
-      data: unemploymentRates,
-    },
-    {
-      id: "Interest Rate",
+      id: "Inflation Rate",
       color: "hsl(263, 70%, 50%)",
       data: inflationRates,
     }
@@ -58,78 +63,63 @@ export default function Labor() {
   // hsl(263, 70%, 50%)
 
   return (
-    <div className={style.graphContainer}>
-      {
-        laborRates
-          .map(rate => !!rate.data.length)
-          .reduce((n0, n1) => {
-            return n0 && n1;
-          }, true) ?
-            <ResponsiveLine
-              data={laborRates}
-              margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-              xScale={{ type: 'point' }}
-              yScale={{
-                  type: 'linear',
-                  min: 'auto',
-                  max: 'auto',
-                  stacked: true,
-                  reverse: false
-              }}
-              yFormat=" >-.2f"
-              axisTop={null}
-              axisRight={null}
-              axisBottom={{
-                tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
-                legend: 'Month Year',
-                legendOffset: 36,
-                legendPosition: 'middle'
-              }}
-              axisLeft={{
-                tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
-                legend: 'Percentage',
-                legendOffset: -40,
-                legendPosition: 'middle'
-              }}
-              pointSize={10}
-              pointColor={{ theme: 'background' }}
-              pointBorderWidth={2}
-              pointBorderColor={{ from: 'serieColor' }}
-              pointLabelYOffset={-12}
-              useMesh={true}
-              legends={[
-                {
-                  anchor: 'bottom-right',
-                  direction: 'column',
-                  justify: false,
-                  translateX: 100,
-                  translateY: 0,
-                  itemsSpacing: 0,
-                  itemDirection: 'left-to-right',
-                  itemWidth: 80,
-                  itemHeight: 20,
-                  itemOpacity: 0.75,
-                  symbolSize: 12,
-                  symbolShape: 'circle',
-                  symbolBorderColor: 'rgba(0, 0, 0, .5)',
-                  effects: [
-                    {
-                      on: 'hover',
-                      style: {
-                        itemBackground: 'rgba(0, 0, 0, .03)',
-                        itemOpacity: 1
-                      }
-                    }
-                  ]
-                }
-              ]}
-            /> :
-            <div>Sorry, we are unable to retrieve the data requested.</div>
-      }
-    </div>
+    <Box sx={{ minWidth: 275 }}>
+      <Card variant="outlined">
+        <CardContent>
+          <Typography sx={{ textAlign: 'center' }} >
+            Inflation Rates
+          </Typography>
+          <div className={style.graphContainer}>{
+            isLoading ?
+              <div className={style.spinnerContainer}>
+                <CircularProgress />
+              </div> :
+              laborRates
+                .map(rate => !!rate.data.length)
+                .reduce((n0, n1) => {
+                  return n0 && n1;
+                }, true) ?
+                  <ResponsiveLine
+                    data={laborRates}
+                    margin={{ top: 30, right: 40, bottom: 50, left: 45 }}
+                    xScale={{ type: 'point' }}
+                    yScale={{
+                        type: 'linear',
+                        min: 'auto',
+                        max: 'auto',
+                        stacked: true,
+                        reverse: false
+                    }}
+                    yFormat=" >-.2f"
+                    axisTop={null}
+                    axisRight={null}
+                    axisBottom={{
+                      tickSize: 5,
+                      tickPadding: 5,
+                      tickRotation: -45,
+                      legend: 'Month Year',
+                      legendOffset: 60,
+                      legendPosition: 'middle'
+                    }}
+                    axisLeft={{
+                      tickSize: 5,
+                      tickPadding: 5,
+                      tickRotation: 0,
+                      legend: 'Percentage',
+                      legendOffset: -40,
+                      legendPosition: 'middle'
+                    }}
+                    pointSize={10}
+                    pointColor={{ theme: 'background' }}
+                    pointBorderWidth={2}
+                    pointBorderColor={{ from: 'serieColor' }}
+                    pointLabelYOffset={-12}
+                    useMesh={true}
+                  /> :
+                  <div>Sorry, we are unable to retrieve the data requested.</div>
+          }</div>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
