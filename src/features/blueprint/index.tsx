@@ -86,7 +86,15 @@ function BluePrint() {
         </Typography>
         <Typography sx={typographText}>
           The API is containerized with <strong>Docker</strong>, deployed to <strong>Azure App Services</strong>, and hosted at
-          the following url: <Link href="https://weatherportfolio.azurewebsites.net/">https://weatherportfolio.azurewebsites.net</Link>.
+          the following url: <Link
+            sx={{
+              overflowWrap: 'break-word',
+              wordWrap: 'break-word',
+              wordBreak: 'break-word',
+            }}
+            href="https://weatherportfolio.azurewebsites.net/">
+              https://weatherportfolio.azurewebsites.net
+          </Link>.
         </Typography>
       </Box>
 
