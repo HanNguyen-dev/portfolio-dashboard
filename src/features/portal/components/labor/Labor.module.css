@@ -1,6 +1,9 @@
 .graphContainer {
-  padding-top: 1rem;
+  height: 322.75px;
+}
+
+.spinnerContainer {
+  padding-top: 130px;
+  vertical-align: middle;
   text-align: center;
-  height: 45rem;
-  width: 80rem;
 }
