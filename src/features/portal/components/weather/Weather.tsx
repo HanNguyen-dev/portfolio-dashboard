@@ -72,66 +72,66 @@ export default function Weather() {
   return (
     <Box sx={{ minWidth: 275 }}>
       <Card variant="outlined">
-      <CardContent>
-        <Autocomplete
-          id="free-solo-demo"
-          freeSolo
-          filterOptions={x => x}
-          value={location?.description || ''}
-          options={predictions?.places?.map((option) => option.description) || []}
-          onChange={onSelect}
-          onInputChange={handleQuery}
-          renderInput={(params) => <TextField {...params} variant="standard" label="Enter a location" />}
-        />
-        <Typography variant="h5" component="div" sx={{ mt: 2 }}>
-          {
-            location && forecasts ?
-              <Link
-                color="inherit"
-                href={forecasts?.location?.url}
-                rel="noopener"
-                target="_blank">
-                  <LocationOnIcon sx={{ color: 'text.secondary' }} />
-                  {location.description}
-              </Link> :
-            forecasts?.location.name &&
-              <div
-                color="inherit">
-                  {forecasts.location.name}
-              </div>
-          }
-        </Typography>
-        <Grid container spacing={0}>
-          <Grid item
-            xs={6}
-          >
-            <Typography sx={{ mt: 2, mb: 1.5, fontSize: 60, textAlign: 'center' }}>
-              {formatTemp(forecasts?.current_observation?.condition.temperature)}
-            </Typography>
-            <Typography sx={{ mb: 1.5, textAlign: 'center' }} color="text.secondary">
-              H: {formatTemp(forecasts?.forecasts[0].high)} L: {formatTemp(forecasts?.forecasts[0].low)}
-            </Typography>
-          </Grid>
-          <Grid item
-            xs={6}
-          >
-            <div className={styles.iconContainer}>
-              <img src={forecasts?.current_observation?.condition.iconUrl.replace("4x", "2x")} alt="weather icon"/>
-              <Typography sx={{ mb: 1.5, textAlign: 'center' }} color="text.secondary">
-                {forecasts?.current_observation?.condition.text || '____'}
+        <CardContent>
+          <Autocomplete
+            id="free-solo-demo"
+            freeSolo
+            filterOptions={x => x}
+            value={location?.description || ''}
+            options={predictions?.places?.map((option) => option.description) || []}
+            onChange={onSelect}
+            onInputChange={handleQuery}
+            renderInput={(params) => <TextField {...params} variant="standard" label="Enter a location" />}
+          />
+          <Typography variant="h5" component="div" sx={{ mt: 2 }}>
+            {
+              location && forecasts ?
+                <Link
+                  color="inherit"
+                  href={forecasts?.location?.url}
+                  rel="noopener"
+                  target="_blank">
+                    <LocationOnIcon sx={{ color: 'text.secondary' }} />
+                    {location.description}
+                </Link> :
+              forecasts?.location.name &&
+                <div
+                  color="inherit">
+                    {forecasts.location.name}
+                </div>
+            }
+          </Typography>
+          <Grid container spacing={0}>
+            <Grid item
+              xs={6}
+            >
+              <Typography sx={{ mt: 2, mb: 1.5, fontSize: 60, textAlign: 'center' }}>
+                {formatTemp(forecasts?.current_observation?.condition.temperature)}
               </Typography>
-            </div>
+              <Typography sx={{ mb: 1.5, textAlign: 'center' }} color="text.secondary">
+                H: {formatTemp(forecasts?.forecasts[0].high)} L: {formatTemp(forecasts?.forecasts[0].low)}
+              </Typography>
+            </Grid>
+            <Grid item
+              xs={6}
+            >
+              <div className={styles.iconContainer}>
+                <img src={forecasts?.current_observation?.condition.iconUrl.replace("4x", "2x")} alt="weather icon"/>
+                <Typography sx={{ mb: 1.5, textAlign: 'center' }} color="text.secondary">
+                  {forecasts?.current_observation?.condition.text || '____'}
+                </Typography>
+              </div>
+            </Grid>
           </Grid>
-        </Grid>
-      </CardContent>
-      <CardActions>
-        <Button
-          size="small"
-          onClick={() => setIsCelsius(value => !value)}
+        </CardContent>
+        <CardActions>
+          <Button
+            size="small"
+            onClick={() => setIsCelsius(value => !value)}
           >
             Convert to {isCelsius ? 'Fahrenheit' : 'Celsius'}
           </Button>
-      </CardActions>
+        </CardActions>
       </Card>
     </Box>
   );

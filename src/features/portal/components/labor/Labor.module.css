@@ -1,5 +1,9 @@
 .graphContainer {
   height: 322.75px;
+
+  @media screen and (min-width: 900px) {
+    height: 264.75px;
+  }
 }
 
 .spinnerContainer {
