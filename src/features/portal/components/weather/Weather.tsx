@@ -17,6 +17,7 @@ import { selectForecasts, selectLocation, selectPlaces } from "../../state/porta
 import { updateLocation } from "../../portalSlice";
 
 import { PortalActionTypes } from "../../state/portalActionTypes";
+import { fetchForecasts, fetchPlaces } from "../../state/portalActions";
 
 
 export default function Weather() {
@@ -37,10 +38,7 @@ export default function Weather() {
     () => debounce(
       (event: any, inputValue: string, reason: string) => {
         if (inputValue && reason == 'input') {
-          dispatch({
-            type: PortalActionTypes.FETCH_PLACES_SAGA,
-            payload: { query: inputValue, session: predictions?.session || '' }
-          });
+          dispatch(fetchPlaces({ query: inputValue, session: predictions?.session || '' }));
         }
       },
       400,
@@ -54,10 +52,10 @@ export default function Weather() {
       predictions
     ) {
       dispatch(updateLocation(predictions.places[index]));
-      dispatch({
-        type: PortalActionTypes.FETCH_FORECASTS_SAGA,
-        payload: { placeId: predictions.places[index].placeId, session: predictions.session },
-      });
+      dispatch(fetchForecasts({
+        placeId: predictions.places[index].placeId,
+        session: predictions.session
+      }));
     }
   }
 
