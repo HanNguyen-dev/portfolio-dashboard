@@ -3,11 +3,12 @@ import { updateError, updateForecasts, updatePlaces } from "../portalSlice";
 import { fetchForecastsByPlace, fetchPlaces } from "./api/weatherApi";
 import { Places } from "../domain/Places";
 import { PortalActionTypes } from "./portalActionTypes";
-import { Action } from "@reduxjs/toolkit";
 import { Forecasts } from "../domain/Forecasts";
+import { PlacesPayload, ForecastsPayload } from "./portalActions";
+import { PayloadAction } from "@reduxjs/toolkit";
 
-function* fetchPlacesQuery(
-  { payload }: Action & { payload: { query: string, session?: string } }
+export function* fetchPlacesQuery(
+  { payload }: PayloadAction<PlacesPayload>
 ): Generator<any> {
   try {
     const result = yield call(() => {
@@ -20,7 +21,7 @@ function* fetchPlacesQuery(
 }
 
 function* fetchForecastByPlaceQuery(
-  { payload }: Action & { payload: { placeId: string, session?: string } }
+  { payload }: PayloadAction<ForecastsPayload>
 ): Generator<any> {
   try {
     const result = yield call(() => {
@@ -32,7 +33,7 @@ function* fetchForecastByPlaceQuery(
   }
 }
 
-export default function* rootSaga() {
+export default function* portalSaga() {
   yield takeEvery(PortalActionTypes.FETCH_PLACES_SAGA, fetchPlacesQuery);
   yield takeEvery(PortalActionTypes.FETCH_FORECASTS_SAGA, fetchForecastByPlaceQuery);
 }
