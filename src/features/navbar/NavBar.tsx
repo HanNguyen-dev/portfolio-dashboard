@@ -52,15 +52,14 @@ function NavBar() {
           {
             matches &&
               pages.map(x => (
-                <>
-                  <Button
-                    sx={buttonSxStyle}
-                    onClick={() => navigateTo(x.route)}
-                    color="inherit"
-                  >
-                    {x.name}
-                  </Button>
-                </>
+                <Button
+                  sx={buttonSxStyle}
+                  onClick={() => navigateTo(x.route)}
+                  color="inherit"
+                  key={x.route}
+                >
+                  {x.name}
+                </Button>
               ))
           }
           <div className={style.space}>
