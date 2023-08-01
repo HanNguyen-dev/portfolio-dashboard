@@ -31,6 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test-coverage": "react-scripts test --coverage --coverageReporters html --watchAll",
+    "cypress": "cypress open",
     "eject": "react-scripts eject"
   },
   "jest": {
@@ -58,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "cypress": "^12.17.2",
     "http-proxy-middleware": "^2.0.6"
   }
 }
