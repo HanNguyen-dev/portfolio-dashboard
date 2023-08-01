@@ -27,7 +27,7 @@ function BluePrint() {
           As a frontend developer, I chose one of the modern frameworks.  In this case,
           this portfolio is built with <strong>React.js</strong> using <strong>create-react-app</strong>.
           If you are a web developer or UX designer, most likely you notice I am
-          using <Link rel="noopener noreferrer" href={"https://m3.material.io/"}>Material Design</Link> from Google
+          using <Link data-cy="mui-link" rel="noopener noreferrer" href={"https://m3.material.io/"}>Material Design</Link> from Google
           but with React <Link rel="noopener noreferrer" href={"https://mui.com/"}>MUI</Link>.
         </Typography>
         <Typography variant="body2" sx={typographText}>
@@ -35,7 +35,7 @@ function BluePrint() {
           handle state management, side effects, and HTTP requests.
         </Typography>
         <Typography variant="body2" sx={typographText}>
-          See this <Link rel="noopener noreferrer" href={"https://github.com/hannguyen-dev/portfolio-dashboard"}>Github</Link> link for the source code.
+          See this <Link data-cy="github-dashboard-link" rel="noopener noreferrer" href={"https://github.com/hannguyen-dev/portfolio-dashboard"}>Github</Link> link for the source code.
         </Typography>
       </Box>
       <Box
@@ -47,13 +47,13 @@ function BluePrint() {
         </h1>
         <Typography sx={typographText}>
           The microservice is written in <strong>Java</strong> using <strong>Spring Boot</strong>.  The weather feature interfaces
-          with 3 other external APIs: <Link rel="noopener noreferrer" href="https://developers.google.com/maps">
+          with 3 other external APIs: <Link data-cy="google-map-api-link" rel="noopener noreferrer" href="https://developers.google.com/maps">
             Google Maps
           </Link>
-          , <Link rel="noopener noreferrer" href="https://ipinfo.io/">
+          , <Link data-cy="ip-info-link" rel="noopener noreferrer" href="https://ipinfo.io/">
             Ipinfo
           </Link>,
-          and <Link rel="noopener noreferrer" href="https://openweathermap.org">OpenWeatherMap</Link>.
+          and <Link data-cy="open-weather-link" rel="noopener noreferrer" href="https://openweathermap.org">OpenWeatherMap</Link>.
         </Typography>
         <Typography sx={typographText}>
           Google Maps enhances the user experience by providing autocompletion for places and addresses.
@@ -62,7 +62,7 @@ function BluePrint() {
           Finally, Ipinfo is used to retrieve the user's longitudes and latitudes.
         </Typography>
         <Typography variant="body2" sx={typographText}>
-          See this <Link rel="noopener noreferrer" href={"https://github.com/HanNguyen-dev/portfolio-weather"}>Github</Link> link for the source code.
+          See this <Link data-cy="github-weather-api" rel="noopener noreferrer" href={"https://github.com/HanNguyen-dev/portfolio-weather"}>Github</Link> link for the source code.
         </Typography>
       </Box>
 
@@ -82,6 +82,7 @@ function BluePrint() {
         <Typography sx={typographText}>
           The API is containerized with <strong>Docker</strong>, deployed to <strong>Azure App Services</strong>, and hosted at
           the following url: <Link
+            data-cy="azure-website"
             sx={{
               overflowWrap: 'break-word',
               wordWrap: 'break-word',
