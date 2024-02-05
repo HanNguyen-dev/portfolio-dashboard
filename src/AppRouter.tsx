@@ -1,37 +1,22 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Suspense, lazy } from "react";
 
-const Portal = lazy(() => import("./features/portal/Portal"));
-const BluePrint = lazy(() => import("./features/blueprint"));
-const Counter = lazy(() => import("./features/counter"));
-
-const SuspendWrapper = (props: { children: any }) =>
-  <Suspense fallback={"Loading..."}>{props.children}</Suspense>;
+const lazyLoadComp = (path: string) => async () => {
+  const { Component } = await import(path);
+  return { Component };
+}
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <SuspendWrapper>
-        <Portal />
-      </SuspendWrapper>
-    ),
+    lazy: () => import("./features/portal/Portal"),
   },
   {
     path: "/blueprint",
-    element: (
-      <SuspendWrapper>
-        <BluePrint />
-      </SuspendWrapper>
-    ),
+    lazy: lazyLoadComp("./features/blueprint"),
   },
   {
     path: "/counter",
-    element: (
-      <SuspendWrapper>
-        <Counter />
-      </SuspendWrapper>
-    ),
+    lazy: lazyLoadComp("./features/counter"),
   }
 ]);
 
