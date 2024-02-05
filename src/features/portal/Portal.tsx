@@ -60,3 +60,5 @@ export default function Portal() {
     </>
   );
 }
+
+export { Portal as Component };

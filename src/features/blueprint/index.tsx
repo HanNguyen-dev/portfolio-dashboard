@@ -89,7 +89,7 @@ function BluePrint() {
               wordBreak: 'break-word',
             }}
             href="https://weatherportfolio.azurewebsites.net/">
-              https://weatherportfolio.azurewebsites.net
+            https://weatherportfolio.azurewebsites.net
           </Link>.
         </Typography>
       </Box>
@@ -98,4 +98,4 @@ function BluePrint() {
   );
 }
 
-export default BluePrint;
+export { BluePrint };
