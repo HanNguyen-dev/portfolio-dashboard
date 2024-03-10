@@ -36,7 +36,9 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
-      "!src/setupProxy.js"
+      "!src/setupProxy.js",
+      "!src/App.test.tsx",
+      "!src/App.tsx"
     ]
   },
   "eslintConfig": {
