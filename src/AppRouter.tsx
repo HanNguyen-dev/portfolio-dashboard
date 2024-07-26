@@ -1,10 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-const lazyLoadComp = (path: string) => async () => {
-  const { Component } = await import(path);
-  return { Component };
-}
-
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -12,12 +7,18 @@ export const router = createBrowserRouter([
   },
   {
     path: "/blueprint",
-    lazy: lazyLoadComp("./features/blueprint"),
+    async lazy() {
+      const { BluePrint } = await import("./features/blueprint");
+      return { Component: BluePrint };
+    },
   },
   {
     path: "/counter",
-    lazy: lazyLoadComp("./features/counter"),
-  }
+    async lazy() {
+      const { Component } = await import("./features/counter");
+      return { Component };
+    },
+  },
 ]);
 
 export default function AppRouter() {

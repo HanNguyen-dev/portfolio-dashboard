@@ -1,9 +1,8 @@
-import logo from '../../logo.svg';
-import { Counter } from './Counter';
-import style from './Index.module.css';
+import logo from "../../logo.svg";
+import { Counter } from "./Counter";
+import style from "./Index.module.css";
 
 export default function CounterContainer() {
-
   return (
     <div className={style.app}>
       <header className={style.appHeader}>
@@ -54,3 +53,5 @@ export default function CounterContainer() {
     </div>
   );
 }
+
+export { CounterContainer as Component };
