@@ -1,5 +1,5 @@
-import { createTheme } from '@mui/material/styles';
-import { blue, grey } from '@mui/material/colors';
+import { createTheme } from "@mui/material/styles";
+import { blue, grey } from "@mui/material/colors";
 
 export const themeApp = createTheme({
   palette: {
@@ -9,7 +9,7 @@ export const themeApp = createTheme({
       dark: grey[900],
     },
     secondary: {
-      main: '#f44336',
+      main: "#f44336",
     },
   },
 });
@@ -19,4 +19,4 @@ export const typographText = {
   lineHeight: "1.8",
   fontFamily: "Noto Serif, Georgia, Times New Roman, Roboto",
   pb: "1rem",
-}
+};
