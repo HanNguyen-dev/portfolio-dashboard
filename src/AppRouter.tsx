@@ -1,21 +1,21 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    lazy: () => import("./features/portal/Portal"),
+    path: '/',
+    lazy: () => import('./features/portal/Portal'),
   },
   {
-    path: "/blueprint",
+    path: '/blueprint',
     async lazy() {
-      const { BluePrint } = await import("./features/blueprint");
+      const { BluePrint } = await import('./features/blueprint');
       return { Component: BluePrint };
     },
   },
   {
-    path: "/counter",
+    path: '/counter',
     async lazy() {
-      const { Component } = await import("./features/counter");
+      const { Component } = await import('./features/counter');
       return { Component };
     },
   },
