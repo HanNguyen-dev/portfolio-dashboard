@@ -30,9 +30,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage --watch=false",
     "test-coverage": "react-scripts test --coverage --coverageReporters html --watchAll",
     "cypress": "cypress open",
     "eject": "react-scripts eject"
@@ -62,6 +64,9 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^12.17.2"
+    "@vitest/coverage-v8": "^2.1.2",
+    "cypress": "^12.17.2",
+    "jsdom": "^25.0.1",
+    "vitest": "^2.1.2"
   }
 }
