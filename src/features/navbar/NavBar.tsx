@@ -6,8 +6,8 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import style from './NavBar.module.css';
 import { router } from '../../AppRouter';
-import githubLogo from '../../assets/github-mark-white.svg'
-import linkedInLogo from '../../assets/In-White.png'
+import githubLogo from '../../assets/github-mark-white.svg';
+import linkedInLogo from '../../assets/In-White.png';
 import MenuIcon from '@mui/icons-material/Menu';
 import SideBar from './components/SideBar';
 import Link from '@mui/material/Link';
@@ -18,18 +18,17 @@ import { useState } from 'react';
 
 const buttonSxStyle = {
   fontWeight: 500,
-  ":hover": {
-    textDecorationLine: "underline",
-    textUnderlineOffset: "3px",
+  ':hover': {
+    textDecorationLine: 'underline',
+    textUnderlineOffset: '3px',
   },
-}
+};
 
 function NavBar() {
   const navigateTo = router.navigate;
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
   const [showSideBar, setShowSideBar] = useState<boolean>(false);
-
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -49,24 +48,21 @@ function NavBar() {
             Han's Portfolio
           </Typography>
           <div className={style.verticalDivider}></div>
-          {
-            matches &&
-              pages.map(x => (
-                <Button
-                  sx={buttonSxStyle}
-                  onClick={() => navigateTo(x.route)}
-                  color="inherit"
-                  key={x.route}
-                >
-                  {x.name}
-                </Button>
-              ))
-          }
-          <div className={style.space}>
-          </div>
+          {matches &&
+            pages.map((x) => (
+              <Button
+                sx={buttonSxStyle}
+                onClick={() => navigateTo(x.route)}
+                color="inherit"
+                key={x.route}
+              >
+                {x.name}
+              </Button>
+            ))}
+          <div className={style.space}></div>
           <Link
             rel="noopener"
-            href={process.env.REACT_APP_LINKEDIN_LINK}
+            href={import.meta.env.VITE_APP_LINKEDIN_LINK}
             sx={{
               ml: '1rem',
             }}
@@ -75,7 +71,7 @@ function NavBar() {
           </Link>
           <Link
             rel="noopener"
-            href='https://github.com/HanNguyen-dev'
+            href="https://github.com/HanNguyen-dev"
             sx={{
               ml: '1rem',
             }}
@@ -84,7 +80,7 @@ function NavBar() {
           </Link>
         </Toolbar>
       </AppBar>
-      <SideBar open={showSideBar} onClose={() => setShowSideBar(false)}/>
+      <SideBar open={showSideBar} onClose={() => setShowSideBar(false)} />
     </Box>
   );
 }
